@@ -1,4 +1,4 @@
-# AnthroMaker
+# Anthro Maker
 An extendable, open source program for making anthro characters! Also known as Make Me A Furry! (MMAF)
 
 ## Note
@@ -9,7 +9,7 @@ Check for updates on the official discord! Early builds are here!
 https://discord.gg/2MxRRgp
 
 ## Downloads
-Unfortunately the application is not stable enough for downloads yet, sorry!
+Unfortunately the application is not stable enough for downloads yet, sorry! (Psst, join the discord for some)
 
 ## Credits
 Program by Gota7.
