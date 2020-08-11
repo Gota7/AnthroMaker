@@ -33,6 +33,10 @@ namespace AnthroMaker {
             ImGui.Text("Wallpaper Tags");
             ImGui.InputText("##2", ref Helper.Settings.WallpaperTags, 10000);
             ImGui.Separator();
+            int ind = Helper.Settings.ThemeIndex;
+            if (ImGui.Combo("Theme", ref ind, Style.ThemeList, Style.ThemeList.Length)) {
+                Helper.Settings.ThemeIndex = ind;
+            }
             if (ImGui.Button("Style Editor")) {
                 new StyleEditorWindow();
             }

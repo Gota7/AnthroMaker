@@ -41,7 +41,7 @@ namespace AnthroMaker {
         /// <summary>
         /// Default theme.
         /// </summary>
-        public string Theme = "Luigi's Mansion";
+        public string Theme = "Fur Affinity";
 
         /// <summary>
         /// Theme index.
