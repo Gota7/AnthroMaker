@@ -3,6 +3,7 @@ using IniParser.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace AnthroMaker {
@@ -38,6 +39,22 @@ namespace AnthroMaker {
         public string WallpaperTags = "-mlp";
 
         /// <summary>
+        /// Default theme.
+        /// </summary>
+        public string Theme = "Luigi's Mansion";
+
+        /// <summary>
+        /// Theme index.
+        /// </summary>
+        public int ThemeIndex {
+            get => Style.ThemeList.ToList().IndexOf(Theme);
+            set {
+                Theme = Style.ThemeList[value];
+                Style.LoadFromFile(Theme);
+            }
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public Settings() {
@@ -52,7 +69,6 @@ namespace AnthroMaker {
         /// </summary>
         public void LoadSettings() {
 
-
             //Load INI.
             if (!File.Exists("Res/Settings.ini")) { SaveSettings(); }
             FileIniDataParser parser = new FileIniDataParser();
@@ -64,6 +80,7 @@ namespace AnthroMaker {
             ForceWallpaperSFW = bool.Parse(ini["Settings"]["ForceWallpaperSFW"]);
             WallpaperTime = int.Parse(ini["Settings"]["WallpaperTime"]);
             WallpaperTags = ini["Settings"]["WallpaperTags"];
+            Theme = ini["Settings"]["Theme"];
 
         }
 
@@ -80,6 +97,7 @@ namespace AnthroMaker {
             ini["Settings"].AddKey("ForceWallpaperSFW", ForceWallpaperSFW.ToString());
             ini["Settings"].AddKey("WallpaperTime", WallpaperTime.ToString());
             ini["Settings"].AddKey("WallpaperTags", WallpaperTags);
+            ini["Settings"].AddKey("Theme", Theme);
             FileIniDataParser parser = new FileIniDataParser();
             parser.WriteFile("Res/Settings.ini", ini);
 

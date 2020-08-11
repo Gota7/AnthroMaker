@@ -33,6 +33,9 @@ namespace AnthroMaker {
             ImGui.Text("Wallpaper Tags");
             ImGui.InputText("##2", ref Helper.Settings.WallpaperTags, 10000);
             ImGui.Separator();
+            if (ImGui.Button("Style Editor")) {
+                new StyleEditorWindow();
+            }
             if (ImGui.Button("Reload Last Settings")) {
                 Helper.Settings.LoadSettings();
             }
@@ -40,6 +43,7 @@ namespace AnthroMaker {
             if (ImGui.Button("Save Settings")) {
                 Helper.Settings.SaveSettings();
             }
+
         }
 
     }

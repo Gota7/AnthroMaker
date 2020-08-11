@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Num = System.Numerics;
 
@@ -18,11 +19,6 @@ namespace AnthroMaker {
         /// ImGui renderer.
         /// </summary>
         private ImGuiRenderer ImGuiRenderer;
-
-        /// <summary>
-        /// Font.
-        /// </summary>
-        ImFontPtr Font;
 
         /// <summary>
         /// Wallpapapers.
@@ -43,65 +39,14 @@ namespace AnthroMaker {
 
             //Initialize renderer.
             ImGuiRenderer = new ImGuiRenderer(Helper.Game);
-            Font = ImGui.GetIO().Fonts.AddFontFromFileTTF("Res/Delfino.ttf", 14.0f);
-            ImGuiRenderer.RebuildFontAtlas();
             Helper.ImGuiRenderer = ImGuiRenderer;
 
             //Set up style.
-            var style = ImGui.GetStyle();
-            style.WindowRounding = 5.3f;
-            style.FrameRounding = 2.3f;
-            style.ScrollbarRounding = 0;
-
-            //Style colors.
-            style.Colors[(int)ImGuiCol.Text] = new Num.Vector4(1.00f, 1.00f, 1.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.TextDisabled] = new Num.Vector4(1.00f, 1.00f, 1.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.WindowBg] = new Num.Vector4(0.06f, 0.06f, 0.06f, 0.94f);
-            style.Colors[(int)ImGuiCol.ChildBg] = new Num.Vector4(0.00f, 0.00f, 0.00f, 0.00f);
-            style.Colors[(int)ImGuiCol.PopupBg] = new Num.Vector4(0.08f, 0.08f, 0.08f, 0.94f);
-            style.Colors[(int)ImGuiCol.Border] = new Num.Vector4(0.43f, 0.43f, 0.50f, 0.50f);
-            style.Colors[(int)ImGuiCol.BorderShadow] = new Num.Vector4(0.00f, 0.00f, 0.00f, 0.00f);
-            style.Colors[(int)ImGuiCol.FrameBg] = new Num.Vector4(0.00f, 0.42f, 0.15f, 0.54f);
-            style.Colors[(int)ImGuiCol.FrameBgHovered] = new Num.Vector4(0.40f, 0.90f, 0.00f, 0.40f);
-            style.Colors[(int)ImGuiCol.FrameBgActive] = new Num.Vector4(0.00f, 0.55f, 0.23f, 1.00f);
-            style.Colors[(int)ImGuiCol.TitleBg] = new Num.Vector4(0.04f, 0.28f, 0.13f, 1.00f);
-            style.Colors[(int)ImGuiCol.TitleBgActive] = new Num.Vector4(0.10f, 0.41f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.TitleBgCollapsed] = new Num.Vector4(0.00f, 0.00f, 0.00f, 0.51f);
-            style.Colors[(int)ImGuiCol.MenuBarBg] = new Num.Vector4(0.14f, 0.14f, 0.14f, 1.00f);
-            style.Colors[(int)ImGuiCol.ScrollbarBg] = new Num.Vector4(0.02f, 0.02f, 0.02f, 0.53f);
-            style.Colors[(int)ImGuiCol.ScrollbarGrab] = new Num.Vector4(0.31f, 0.31f, 0.31f, 1.00f);
-            style.Colors[(int)ImGuiCol.ScrollbarGrabHovered] = new Num.Vector4(0.31f, 0.31f, 0.31f, 1.00f);
-            style.Colors[(int)ImGuiCol.ScrollbarGrabActive] = new Num.Vector4(0.51f, 0.51f, 0.51f, 1.00f);
-            style.Colors[(int)ImGuiCol.CheckMark] = new Num.Vector4(0.12f, 0.85f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.SliderGrab] = new Num.Vector4(0.19f, 0.78f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.SliderGrabActive] = new Num.Vector4(0.57f, 1.00f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.Button] = new Num.Vector4(0.01f, 0.65f, 0.00f, 0.40f);
-            style.Colors[(int)ImGuiCol.ButtonHovered] = new Num.Vector4(0.53f, 0.86f, 0.01f, 0.74f);
-            style.Colors[(int)ImGuiCol.ButtonActive] = new Num.Vector4(0.53f, 0.86f, 0.01f, 0.74f);
-            style.Colors[(int)ImGuiCol.Header] = new Num.Vector4(0.00f, 0.57f, 0.07f, 0.58f);
-            style.Colors[(int)ImGuiCol.HeaderHovered] = new Num.Vector4(0.49f, 0.86f, 0.00f, 0.82f);
-            style.Colors[(int)ImGuiCol.HeaderActive] = new Num.Vector4(0.22f, 0.79f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.Separator] = new Num.Vector4(0.43f, 0.43f, 0.50f, 0.50f);
-            style.Colors[(int)ImGuiCol.SeparatorHovered] = new Num.Vector4(0.16f, 0.78f, 0.00f, 0.70f);
-            style.Colors[(int)ImGuiCol.SeparatorActive] = new Num.Vector4(0.02f, 0.41f, 0.14f, 1.00f);
-            style.Colors[(int)ImGuiCol.ResizeGrip] = new Num.Vector4(0.02f, 0.58f, 0.09f, 0.58f);
-            style.Colors[(int)ImGuiCol.ResizeGripHovered] = new Num.Vector4(0.57f, 1.00f, 0.00f, 0.69f);
-            style.Colors[(int)ImGuiCol.ResizeGripActive] = new Num.Vector4(0.41f, 0.86f, 0.01f, 1.00f);
-            style.Colors[(int)ImGuiCol.Tab] = new Num.Vector4(0.03f, 0.41f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.TabHovered] = new Num.Vector4(0.43f, 0.76f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.TabActive] = new Num.Vector4(0.18f, 0.67f, 0.05f, 1.00f);
-            style.Colors[(int)ImGuiCol.TabUnfocused] = new Num.Vector4(0.00f, 0.20f, 0.05f, 0.54f);
-            style.Colors[(int)ImGuiCol.TabUnfocusedActive] = new Num.Vector4(0.00f, 0.31f, 0.06f, 1.00f);
-            style.Colors[(int)ImGuiCol.PlotLines] = new Num.Vector4(0.61f, 0.61f, 0.61f, 1.00f);
-            style.Colors[(int)ImGuiCol.PlotLinesHovered] = new Num.Vector4(1.00f, 0.43f, 0.35f, 1.00f);
-            style.Colors[(int)ImGuiCol.PlotHistogram] = new Num.Vector4(0.90f, 0.70f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.PlotHistogramHovered] = new Num.Vector4(1.00f, 0.60f, 0.00f, 1.00f);
-            style.Colors[(int)ImGuiCol.TextSelectedBg] = new Num.Vector4(0.17f, 0.71f, 0.00f, 0.35f);
-            style.Colors[(int)ImGuiCol.DragDropTarget] = new Num.Vector4(1.00f, 1.00f, 0.00f, 0.90f);
-            style.Colors[(int)ImGuiCol.NavHighlight] = new Num.Vector4(0.46f, 0.87f, 0.03f, 1.00f);
-            style.Colors[(int)ImGuiCol.NavWindowingHighlight] = new Num.Vector4(1.00f, 1.00f, 1.00f, 0.70f);
-            style.Colors[(int)ImGuiCol.NavWindowingDimBg] = new Num.Vector4(0.80f, 0.80f, 0.80f, 0.20f);
-            style.Colors[(int)ImGuiCol.ModalWindowDimBg] = new Num.Vector4(0.80f, 0.80f, 0.80f, 0.20f);
+            if (File.Exists("Res/Themes/" + Helper.Settings.Theme + ".ini")) {
+                Style.LoadFromFile(Helper.Settings.Theme);
+            } else {
+                Style.LoadFromFile(Style.ThemeList[0]);
+            }
 
             //Set up the window manager.
             WindowManager.Renderer = ImGuiRenderer;
@@ -114,6 +59,12 @@ namespace AnthroMaker {
         /// </summary>
         public override void Draw() {
 
+            //Rebuild fonts.
+            if (Style.FontRebuildNeeded) {
+                Helper.ImGuiRenderer.RebuildFontAtlas();
+                Style.FontRebuildNeeded = false;
+            }
+
             //Wallpapers.
             Wallpapers.Draw();
             Helper.SpriteBatch.End();
@@ -123,7 +74,7 @@ namespace AnthroMaker {
             ImGuiRenderer.BeforeLayout(Helper.Time);
 
             //Set up font.
-            ImGui.PushFont(Font);
+            ImGui.PushFont(Style.FontPtr);
 
             //Debug.
             if (Helper.DebugMode) {
@@ -164,7 +115,10 @@ namespace AnthroMaker {
 
                 //Tools.
                 if (ImGui.MenuItem("Fursona Maker")) {
-                    
+                    new FursonaMakerWindow();
+                }
+                if (ImGui.MenuItem("Coloring Book")) { 
+                
                 }
                 if (ImGui.MenuItem("Part Editor")) {
 

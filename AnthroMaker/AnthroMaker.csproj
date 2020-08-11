@@ -18,7 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Res\Delfino.ttf">
+    <None Update="Res\Fonts\Delfino.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Res\Fonts\Gravity-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Res\Themes\Luigi's Mansion.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

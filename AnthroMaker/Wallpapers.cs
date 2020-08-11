@@ -112,8 +112,12 @@ namespace AnthroMaker {
         /// </summary>
         async void FetchFile() {
             if (WallpaperCache == null || WallpaperPtr >= WallpaperCache.Count) {
-                WallpaperCache = await Client.Search(Search);
-                WallpaperPtr = 0;
+                try {
+                    WallpaperCache = await Client.Search(Search);
+                    WallpaperPtr = 0;
+                } catch {
+                    return;
+                }
             }
             if (WallpaperCache.Count == 0) {
                 return;
@@ -126,8 +130,10 @@ namespace AnthroMaker {
                         if (fetchedCache) {
                             return;
                         } else {
-                            WallpaperCache = await Client.Search(Search);
-                            WallpaperPtr = 0;
+                            try {
+                                WallpaperCache = await Client.Search(Search);
+                                WallpaperPtr = 0;
+                            } catch { return; }
                             fetchedCache = true;
                             if (WallpaperCache.Count == 0) {
                                 return;
@@ -143,6 +149,9 @@ namespace AnthroMaker {
                 return;
             }
             using (MemoryStream src = new MemoryStream(await WebClient.GetByteArrayAsync(x.File.Url))) {
+                if (PrevWallpaper != null) {
+                    PrevWallpaper.Dispose();
+                }
                 PrevWallpaper = CurrWallpaper;
                 NextWallpaper = Texture2D.FromStream(Helper.Graphics, src);
                 StartTransition();
@@ -173,8 +182,10 @@ namespace AnthroMaker {
                 LastForcedSFW = Helper.Settings.ForceWallpaperSFW;
                 LastTags = Helper.Settings.WallpaperTags;
                 Search.Tags = FORCED_SEARCH + ((Helper.Settings.NSFW && !Helper.Settings.ForceWallpaperSFW) ? " " : " rating:safe ") + Helper.Settings.WallpaperTags;
-                WallpaperCache = await Client.Search(Search);
-                WallpaperPtr = 0;
+                try {
+                    WallpaperCache = await Client.Search(Search);
+                    WallpaperPtr = 0;
+                } catch { return; }
             }
 
         }
