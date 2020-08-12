@@ -46,6 +46,7 @@ namespace AnthroMaker {
 				PreferredBackBufferHeight = DISPLAY_HEIGHT,
 			};
 			graphics.PreferMultiSampling = true;
+			graphics.SynchronizeWithVerticalRetrace = false;
 			graphics.ApplyChanges();
 			Helper.GraphicsDeviceManager = graphics;
 			MainScene = new MainScene();
@@ -63,6 +64,9 @@ namespace AnthroMaker {
 			Helper.DebugMode = DEBUG_MODE;
 			MainScene.Initialize();
 			Window.Title = "Make Me A Furry!";
+			Helper.GraphicsDeviceManager.PreferredBackBufferWidth = DISPLAY_WIDTH;
+			Helper.GraphicsDeviceManager.PreferredBackBufferHeight = DISPLAY_HEIGHT;
+			Helper.GraphicsDeviceManager.ApplyChanges();
 			base.LoadContent();
 		}
 

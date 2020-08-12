@@ -32,6 +32,11 @@ namespace ImGuiUtils {
         private static List<Window> WindowsToDestroy = new List<Window>();
 
         /// <summary>
+        /// Areas to render.
+        /// </summary>
+        private static List<RenderArea> AreasToRender = new List<RenderArea>();
+
+        /// <summary>
         /// Add a window.
         /// </summary>
         /// <param name="w">Window to add.</param>
@@ -57,6 +62,16 @@ namespace ImGuiUtils {
         }
 
         /// <summary>
+        /// Render areas.
+        /// </summary>
+        public static void RenderAreas() {
+            for (int i = 0; i < AreasToRender.Count; i++) {
+                AreasToRender[i].Render();
+                AreasToRender.RemoveAt(0);
+            }
+        }
+
+        /// <summary>
         /// Update the windows.
         /// </summary>
         public static void Update() {
@@ -71,6 +86,14 @@ namespace ImGuiUtils {
             foreach (var w in Windows) {
                 w.Update();
             }
+        }
+
+        /// <summary>
+        /// Queue a render area for rendering.
+        /// </summary>
+        /// <param name="area"></param>
+        public static void QueueRenderArea(RenderArea area) {
+            AreasToRender.Add(area);
         }
 
     }

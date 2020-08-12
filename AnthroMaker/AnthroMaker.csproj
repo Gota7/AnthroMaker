@@ -38,4 +38,14 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Res\Parts\Default - Gota7\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\E621\E621.csproj" />
+    <ProjectReference Include="..\LilyPath\LilyPath.csproj" />
+    <ProjectReference Include="..\YuPaint\YuPaint.csproj" />
+  </ItemGroup>
+
 </Project>

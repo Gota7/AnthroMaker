@@ -59,6 +59,9 @@ namespace AnthroMaker {
         /// </summary>
         public override void Draw() {
 
+            //Render areas.
+            WindowManager.RenderAreas();
+
             //Rebuild fonts.
             if (Style.FontRebuildNeeded) {
                 Helper.ImGuiRenderer.RebuildFontAtlas();
@@ -122,6 +125,9 @@ namespace AnthroMaker {
                 }
                 if (ImGui.MenuItem("Part Editor")) {
 
+                }
+                if (Helper.DebugMode && ImGui.MenuItem("YuPaint")) {
+                    new YuPaintDEMO();
                 }
                 if (ImGui.MenuItem("Settings")) {
                     new SettingsWindow();

@@ -1,5 +1,6 @@
 ﻿using AnthroMaker;
 using ImGuiNET;
+using ImGuiUtils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -69,13 +70,16 @@ namespace ImGuiUtils {
             //Get the mouse location.
             MouseX = ImGui.GetMousePos().X - X - ImGui.GetWindowPos().X;
             MouseY = ImGui.GetMousePos().Y - Y - ImGui.GetWindowPos().Y;
+            MouseX += ImGui.GetScrollX();
+            MouseY += ImGui.GetScrollY();
 
             //Add camera.
             //MouseX += Helper.Camera.X;
             //MouseY += Helper.Camera.Y;
 
             //Draw image.
-            Render();
+            AdjustTrueSize();
+            WindowManager.QueueRenderArea(this);
             ImGui.Image(renderer.BindTexture(RenderTarget), new Num.Vector2(RenderTarget.Width, RenderTarget.Height));
 
         }
@@ -97,6 +101,14 @@ namespace ImGuiUtils {
             Width = width;
             Height = height;
 
+        }
+
+        /// <summary>
+        /// Adjust true size if needed.
+        /// </summary>
+        public void AdjustTrueSize() {
+            Width = RenderTarget.Width;
+            Height = RenderTarget.Height;
         }
 
     }
